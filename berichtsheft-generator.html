@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Berichtsheft Generator - Fachinformatiker</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+
+    <div class="container">
+      <header>
+        <div class="header-inner">
+          <div class="logo-badge">📋</div>
+          <div class="header-text">
+            <h1>Berichtsheft Generator</h1>
+            <p>// Fachinformatiker · Ausbildungsnachweise · KI-gestützt</p>
+          </div>
+          <div class="status-chip">
+            <div class="status-dot"></div>
+            KI aktiv
+          </div>
+        </div>
+      </header>
+
+      <div class="section-label">01 - Ausbildungsdaten</div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon icon-blue">👤</div>
+          Persönliche &amp; Betriebsdaten
+        </div>
+        <div class="grid-2" style="margin-bottom: 16px">
+          <div class="field">
+            <label>Name des Azubis</label>
+            <input
+              type="text"
+              id="azubiName"
+              placeholder="z.B. Max Mustermann"
+            />
+          </div>
+          <div class="field">
+            <label>Ausbildungsberuf</label>
+            <select id="beruf">
+              <option value="Fachinformatiker - Anwendungsentwicklung">
+                Fachinformatiker - Anwendungsentwicklung
+              </option>
+              <option value="Fachinformatiker - Systemintegration">
+                Fachinformatiker - Systemintegration
+              </option>
+              <option value="Fachinformatiker - Daten- und Prozessanalyse">
+                Fachinformatiker - Daten- und Prozessanalyse
+              </option>
+              <option value="Fachinformatiker - Digitale Vernetzung">
+                Fachinformatiker - Digitale Vernetzung
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="field">
+            <label>Ausbildungsbetrieb</label>
+            <input type="text" id="betrieb" placeholder="z.B. Muster GmbH" />
+          </div>
+          <div class="field">
+            <label>Ausbildungsjahr</label>
+            <select id="ausbildungsjahr">
+              <option value="1">1. Ausbildungsjahr</option>
+              <option value="2">2. Ausbildungsjahr</option>
+              <option value="3">3. Ausbildungsjahr</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Ausbilder</label>
+            <input type="text" id="ausbilder" placeholder="z.B. Herr Schmidt" />
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label">02 - Berichtszeitraum</div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon icon-purple">📅</div>
+          Zeitraum &amp; Schultage
+        </div>
+        <div class="grid-2" style="margin-bottom: 20px">
+          <div class="field">
+            <label>Von (Startdatum)</label>
+            <input type="date" id="startDate" />
+          </div>
+          <div class="field">
+            <label>Bis (Enddatum)</label>
+            <input type="date" id="endDate" />
+          </div>
+        </div>
+
+        <div style="margin-bottom: 20px">
+          <label style="margin-bottom: 10px; display: block"
+            >Schultage (welche Wochentage bist du in der Schule?)</label
+          >
+          <div class="day-grid">
+            <label class="day-toggle"
+              ><input type="checkbox" name="schoolDay" value="1" />
+              <div class="day-btn">MO</div>
+              <span class="day-label">Montag</span></label
+            >
+            <label class="day-toggle"
+              ><input type="checkbox" name="schoolDay" value="2" />
+              <div class="day-btn">DI</div>
+              <span class="day-label">Dienstag</span></label
+            >
+            <label class="day-toggle"
+              ><input type="checkbox" name="schoolDay" value="3" />
+              <div class="day-btn">MI</div>
+              <span class="day-label">Mittwoch</span></label
+            >
+            <label class="day-toggle"
+              ><input type="checkbox" name="schoolDay" value="4" />
+              <div class="day-btn">DO</div>
+              <span class="day-label">Donnerstag</span></label
+            >
+            <label class="day-toggle"
+              ><input type="checkbox" name="schoolDay" value="5" />
+              <div class="day-btn">FR</div>
+              <span class="day-label">Freitag</span></label
+            >
+          </div>
+        </div>
+
+        <div style="margin-bottom: 20px">
+          <label style="margin-bottom: 10px; display: block"
+            >Schulwochen-Rhythmus</label
+          >
+          <div class="week-selector">
+            <div
+              class="week-option active"
+              data-wt="both"
+              onclick="setWeekType('both', this)"
+            >
+              Jede Woche
+            </div>
+            <div
+              class="week-option"
+              data-wt="even"
+              onclick="setWeekType('even', this)"
+            >
+              Nur gerade KW
+            </div>
+            <div
+              class="week-option"
+              data-wt="odd"
+              onclick="setWeekType('odd', this)"
+            >
+              Nur ungerade KW
+            </div>
+            <div
+              class="week-option"
+              data-wt="alternating"
+              onclick="setWeekType('alternating', this)"
+            >
+              Abwechselnd
+            </div>
+          </div>
+          <div id="alternatingHint" style="display: none" class="info-note">
+            <span>ℹ</span>
+            Gib an, ob KW 1 eine Schul- oder Betriebswoche ist - das Muster
+            wechselt dann automatisch.
+          </div>
+          <div id="firstWeekPicker" style="display: none; margin-top: 12px">
+            <label style="margin-bottom: 8px; display: block"
+              >Erste Woche des Zeitraums ist...</label
+            >
+            <div class="week-selector" style="max-width: 280px">
+              <div
+                class="week-option active"
+                data-fw="school"
+                onclick="setFirstWeek('school', this)"
+              >
+                Schulwoche
+              </div>
+              <div
+                class="week-option"
+                data-fw="work"
+                onclick="setFirstWeek('work', this)"
+              >
+                Betriebswoche
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-label">03 - Ferien &amp; Feiertage</div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon icon-amber">🏖️</div>
+          Bundesland &amp; Schulferien
+        </div>
+
+        <div style="margin-bottom: 20px">
+          <label style="margin-bottom: 10px; display: block"
+            >Bundesland auswählen</label
+          >
+          <div class="state-grid" id="stateGrid">
+            <div class="state-btn" data-state="BW" onclick="selectState(this)">
+              Baden-Württ.
+            </div>
+            <div class="state-btn" data-state="BY" onclick="selectState(this)">
+              Bayern
+            </div>
+            <div class="state-btn" data-state="BE" onclick="selectState(this)">
+              Berlin
+            </div>
+            <div class="state-btn" data-state="BB" onclick="selectState(this)">
+              Brandenburg
+            </div>
+            <div class="state-btn" data-state="HB" onclick="selectState(this)">
+              Bremen
+            </div>
+            <div class="state-btn" data-state="HH" onclick="selectState(this)">
+              Hamburg
+            </div>
+            <div class="state-btn" data-state="HE" onclick="selectState(this)">
+              Hessen
+            </div>
+            <div class="state-btn" data-state="MV" onclick="selectState(this)">
+              Meckl.-Vorp.
+            </div>
+            <div class="state-btn" data-state="NI" onclick="selectState(this)">
+              Niedersachsen
+            </div>
+            <div
+              class="state-btn active"
+              data-state="NW"
+              onclick="selectState(this)"
+            >
+              NRW
+            </div>
+            <div class="state-btn" data-state="RP" onclick="selectState(this)">
+              Rheinl.-Pfalz
+            </div>
+            <div class="state-btn" data-state="SL" onclick="selectState(this)">
+              Saarland
+            </div>
+            <div class="state-btn" data-state="SN" onclick="selectState(this)">
+              Sachsen
+            </div>
+            <div class="state-btn" data-state="ST" onclick="selectState(this)">
+              Sachsen-Anh.
+            </div>
+            <div class="state-btn" data-state="SH" onclick="selectState(this)">
+              Schlesw.-Holst.
+            </div>
+            <div class="state-btn" data-state="TH" onclick="selectState(this)">
+              Thüringen
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div
+          style="
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+          "
+        >
+          <div style="font-size: 14px; font-weight: 600">
+            Schulferien im Zeitraum
+          </div>
+          <button class="btn btn-ghost" onclick="toggleFerienForm()">
+            + Ferien hinzufügen
+          </button>
+        </div>
+
+        <div class="ferien-add-form" id="ferienForm">
+          <div class="field">
+            <label>Bezeichnung</label>
+            <input
+              type="text"
+              id="ferienName"
+              placeholder="z.B. Sommerferien"
+            />
+          </div>
+          <div class="field">
+            <label>Von</label>
+            <input type="date" id="ferienStart" />
+          </div>
+          <div class="field">
+            <label>Bis</label>
+            <input type="date" id="ferienEnd" />
+          </div>
+          <button
+            class="btn btn-primary"
+            onclick="addFerien()"
+            style="height: 40px; padding: 0 16px"
+          >
+            Hinzufügen
+          </button>
+        </div>
+
+        <div class="ferien-list" id="ferienList">
+          <div
+            style="
+              font-family: var(--mono);
+              font-size: 11px;
+              color: var(--muted);
+              padding: 8px 0;
+            "
+          >
+            Keine Ferien eingetragen - oder Bundesland wählen für
+            Auto-Vorschläge
+          </div>
+        </div>
+
+        <div class="info-note" style="margin-top: 16px">
+          <span>ℹ</span>
+          Gesetzliche Feiertage (NRW Standard) werden automatisch
+          berücksichtigt. Ferien können manuell ergänzt werden.
+        </div>
+      </div>
+
+      <div class="section-label">04 - Tätigkeitsprofil</div>
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon icon-green">⚙️</div>
+          Typische Betriebstätigkeiten
+        </div>
+        <div class="field" style="margin-bottom: 14px">
+          <label>Haupttätigkeiten im Betrieb (kommagetrennt)</label>
+          <textarea
+            id="betriebTaetigkeiten"
+            placeholder="z.B. Softwareentwicklung, Datenbankpflege, Support, Code Reviews, Testing, Dokumentation, Meetings, Deployment"
+          ></textarea>
+        </div>
+        <div class="field">
+          <label>Technologien &amp; Tools</label>
+          <textarea
+            id="technologies"
+            placeholder="z.B. Python, Django, PostgreSQL, Git, Docker, VS Code, Jira, Linux"
+          ></textarea>
+        </div>
+
+        <div class="info-note" style="margin-top: 12px">
+          <span>🤖</span>
+          Die KI generiert auf Basis dieser Angaben realistische,
+          abwechslungsreiche Tätigkeitsbeschreibungen für jeden Arbeitstag.
+        </div>
+      </div>
+
+      <div class="generate-bar">
+        <div class="generate-info">
+          <h3>Berichte generieren</h3>
+          <p id="generateInfo">
+            Alle Angaben ausfüllen und auf "Generieren" klicken
+          </p>
+        </div>
+        <button
+          class="btn btn-primary btn-lg"
+          onclick="startGeneration()"
+          id="genBtn"
+        >
+          <span>⚡</span> KI-Berichte generieren
+        </button>
+      </div>
+
+      <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <div>
+          <div id="loaderText">Wochen werden analysiert...</div>
+          <div class="progress-bar-wrap">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="results">
+        <div class="results-header">
+          <div class="results-title">
+            📄 Ausbildungsnachweise
+            <span class="badge badge-accent" id="totalWeeksLabel"
+              >0 Wochen</span
+            >
+          </div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap">
+            <button class="btn btn-secondary" onclick="expandAll()">
+              Alle ausklappen
+            </button>
+            <button class="btn btn-secondary" onclick="collapseAll()">
+              Alle einklappen
+            </button>
+          </div>
+        </div>
+
+        <div class="stats-row" id="statsRow"></div>
+
+        <div class="export-bar">
+          <button class="btn btn-primary" onclick="exportAll()">
+            📥 Alle exportieren (TXT)
+          </button>
+          <button class="btn btn-secondary" onclick="exportCSV()">
+            📊 CSV Export
+          </button>
+          <button class="btn btn-secondary" onclick="window.print()">
+            🖨️ Drucken
+          </button>
+        </div>
+
+        <div class="weeks-grid" id="weeksGrid"></div>
+      </div>
+
+      <footer>
+        Berichtsheft Generator für Fachinformatiker · Alle generierten Inhalte
+        sind KI-gestützt und können angepasst werden
+      </footer>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script defer src="assets/js/state.js"></script>
+    <script defer src="assets/js/date-utils.js"></script>
+    <script defer src="assets/js/ui.js"></script>
+    <script defer src="assets/js/schedule.js"></script>
+    <script defer src="assets/js/render.js"></script>
+    <script defer src="assets/js/generation.js"></script>
+    <script defer src="assets/js/export.js"></script>
+    <script defer src="assets/js/init.js"></script>
+  </body>
+</html>
