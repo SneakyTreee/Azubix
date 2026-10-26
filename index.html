@@ -1,0 +1,993 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="Azubix schreibt deine Ausbildungsnachweise Woche für Woche mit KI. Kostenlos und ohne Anmeldung."
+    />
+    <meta name="author" content="s4bt" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Azubix</title>
+    <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#18202c" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/tokens.css" />
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/forms.css" />
+    <link rel="stylesheet" href="assets/css/sections.css" />
+    <link rel="stylesheet" href="assets/css/results.css" />
+    <link rel="stylesheet" href="assets/css/overlays.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+    <link rel="stylesheet" href="assets/css/print.css" media="print" />
+  </head>
+  <body>
+    <header class="masthead">
+      <div class="masthead-inner">
+        <a class="wordmark" href="#abschnitt-a" aria-label="Azubix, zum Anfang">
+          <svg class="wordmark-icon" viewBox="0 0 32 32" aria-hidden="true">
+            <rect x="6" y="3" width="21" height="26" rx="2" />
+            <path d="M10 11h13M10 16h13M10 21h8" />
+            <circle cx="6" cy="9" r="2" />
+            <circle cx="6" cy="23" r="2" />
+          </svg>
+          <span>Azubix<small>Berichtsheft mit KI</small></span>
+        </a>
+        <details class="menu heft-menu" id="heftMenu">
+          <summary class="menu-trigger"><span id="heftLabel">1. Ausbildungsjahr</span></summary>
+          <div class="menu-panel" role="menu">
+            <div id="heftList"></div>
+            <hr />
+            <button type="button" class="menu-item" id="newHeftBtn" role="menuitem">
+              Nächstes Ausbildungsjahr anlegen
+            </button>
+            <button type="button" class="menu-item danger" id="deleteHeftBtn" role="menuitem">
+              Dieses Jahr löschen
+            </button>
+          </div>
+        </details>
+        <div class="masthead-actions">
+          <span class="save-state" id="saveIndicator" aria-live="polite"
+            >Wird automatisch gespeichert</span
+          >
+          <button type="button" class="mode-btn" id="settingsBtn">
+            <span class="mode-dot" aria-hidden="true"></span
+            ><span id="providerChip">KI: kostenlos</span>
+          </button>
+          <a
+            class="icon-btn"
+            href="https://github.com/SneakyTreee/Azubix"
+            target="_blank"
+            rel="noopener"
+            title="GitHub-Repo von s4bt"
+            aria-label="GitHub-Repo von s4bt"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="gh-icon">
+              <path
+                d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"
+              />
+            </svg>
+          </a>
+          <button
+            type="button"
+            class="icon-btn"
+            id="shortcutsBtn"
+            aria-label="Tastenkürzel anzeigen"
+            title="Tastenkürzel (?)"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" class="line-icon">
+              <rect x="2.5" y="6" width="19" height="12" rx="2" />
+              <path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10" />
+            </svg>
+          </button>
+          <button type="button" class="icon-btn" id="themeBtn" aria-label="Design wechseln">
+            <svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="8.5" />
+              <path d="M12 3.5a8.5 8.5 0 0 1 0 17z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="binder">
+      <nav class="register" aria-label="Schritte">
+        <a href="#abschnitt-a" data-section="a" data-step="1"
+          ><b>1</b><span>Beruf</span><i class="tick" aria-hidden="true"></i
+        ></a>
+        <a href="#abschnitt-b" data-section="b" data-step="2"
+          ><b>2</b><span>Zeitraum &amp; Schule</span><i class="tick" aria-hidden="true"></i
+        ></a>
+        <a href="#abschnitt-c" data-section="c" data-step="3"
+          ><b>3</b><span>Ferien &amp; Urlaub</span><i class="tick" aria-hidden="true"></i
+        ></a>
+        <a href="#abschnitt-d" data-section="d" data-step="4"
+          ><b>4</b><span>Tätigkeiten</span><i class="tick" aria-hidden="true"></i
+        ></a>
+        <a href="#results" data-section="e"
+          ><b>5</b><span>Nachweise</span><em id="registerCount"></em
+        ></a>
+        <p class="register-note">Alles bleibt in diesem Browser gespeichert.</p>
+      </nav>
+
+      <main class="sheets">
+        <div class="demo-banner" id="demoBanner" hidden>
+          <p>
+            <strong>Das ist ein Beispiel.</strong> Änderungen hier werden nicht gespeichert, deine
+            eigenen Daten bleiben unberührt.
+          </p>
+          <button type="button" class="btn btn-ink btn-sm" id="exitDemoBtn">
+            Zurück zu meinen Daten
+          </button>
+        </div>
+
+        <section class="welcome" id="welcome" hidden aria-labelledby="welcomeTitle">
+          <h2 id="welcomeTitle">So funktioniert Azubix</h2>
+          <ol class="welcome-steps">
+            <li>
+              <b>A bis D ausfüllen.</b> Beruf, Zeitraum, Schultage, Ferien und was du im Betrieb
+              machst. Dauert etwa 3 Minuten.
+            </li>
+            <li>
+              <b>Nachweise schreiben lassen.</b> Die KI schreibt jede Woche. Wenn du willst, gibst
+              du vorher pro Tag Stichworte vor.
+            </li>
+            <li>
+              <b>Prüfen und übertragen.</b> Tage anpassen, abstempeln und mit dem
+              Übertragen-Assistenten ins IHK-Portal kopieren.
+            </li>
+          </ol>
+          <div class="welcome-actions">
+            <button type="button" class="btn btn-ink" id="welcomeStartBtn">Los geht's</button>
+            <button type="button" class="btn btn-quiet" id="demoBtn">Beispiel ansehen</button>
+          </div>
+        </section>
+
+        <section class="setup-summary" id="setupSummary" hidden aria-labelledby="summaryTitle">
+          <div class="summary-head">
+            <h2 id="summaryTitle">Deine Angaben</h2>
+            <button type="button" class="btn btn-quiet btn-sm" id="editSetupBtn">
+              Angaben ändern
+            </button>
+          </div>
+          <ul class="summary-list" id="summaryList"></ul>
+        </section>
+
+        <div id="mainForm" class="setup">
+          <section class="sheet" id="abschnitt-a" data-step="1" aria-labelledby="head-a">
+            <header class="sheet-head">
+              <span class="sheet-letter" aria-hidden="true">1</span>
+              <div>
+                <p class="step-count">Schritt 1 von 4</p>
+                <h2 id="head-a" tabindex="-1">Was lernst du?</h2>
+                <p>Damit weiß die KI, welche Aufgaben und Lernfelder zu dir passen.</p>
+              </div>
+            </header>
+            <div class="fields cols-2">
+              <label class="field">
+                <span class="field-label">Ausbildungsberuf</span>
+                <select id="f-beruf-select"></select>
+              </label>
+              <label class="field">
+                <span class="field-label">Ausbildungsjahr</span>
+                <select id="f-jahr" data-bind="profile.jahr">
+                  <option value="1">1. Ausbildungsjahr</option>
+                  <option value="2">2. Ausbildungsjahr</option>
+                  <option value="3">3. Ausbildungsjahr</option>
+                  <option value="4">4. Ausbildungsjahr</option>
+                </select>
+              </label>
+              <label class="field" id="berufOtherField" hidden>
+                <span class="field-label">Dein Ausbildungsberuf</span>
+                <input type="text" id="f-beruf" placeholder="Beruf eintragen" />
+              </label>
+            </div>
+
+            <details class="more">
+              <summary>
+                Name, Betrieb und Logo für den Ausdruck <em>freiwillig, geht auch später</em>
+              </summary>
+              <div class="fields cols-2">
+                <label class="field">
+                  <span class="field-label">Name</span>
+                  <input
+                    type="text"
+                    id="f-name"
+                    data-bind="profile.name"
+                    placeholder="Vorname Nachname"
+                    autocomplete="name"
+                  />
+                </label>
+                <label class="field">
+                  <span class="field-label">Ausbildungsbetrieb</span>
+                  <input
+                    type="text"
+                    id="f-betrieb"
+                    data-bind="profile.betrieb"
+                    placeholder="Name des Betriebs"
+                    autocomplete="organization"
+                  />
+                </label>
+                <label class="field">
+                  <span class="field-label">Abteilung</span>
+                  <input
+                    type="text"
+                    id="f-abteilung"
+                    data-bind="profile.abteilung"
+                    placeholder="z.B. IT-Service, Webentwicklung"
+                  />
+                </label>
+                <label class="field">
+                  <span class="field-label">Ausbilder/in</span>
+                  <input
+                    type="text"
+                    id="f-ausbilder"
+                    data-bind="profile.ausbilder"
+                    placeholder="Name für die Unterschrift"
+                  />
+                </label>
+                <label class="field">
+                  <span class="field-label">Erste Nachweis-Nr.</span>
+                  <input type="number" id="f-startnr" min="1" data-bind="profile.startNr" />
+                  <span class="field-hint">Wenn du mitten im Jahr weitermachst</span>
+                </label>
+              </div>
+              <div class="logo-field">
+                <div class="logo-preview" id="logoPreview" aria-hidden="true"></div>
+                <div class="field">
+                  <span class="field-label">Firmenlogo für Druck, PDF und Word</span>
+                  <div class="logo-actions">
+                    <label class="btn btn-quiet btn-sm"
+                      >Logo auswählen<input
+                        type="file"
+                        id="logoInput"
+                        accept="image/png,image/jpeg"
+                        hidden
+                    /></label>
+                    <button type="button" class="btn btn-text btn-sm" id="logoRemoveBtn" hidden>
+                      Entfernen
+                    </button>
+                  </div>
+                  <span class="field-hint">PNG oder JPG, höchstens 500 KB.</span>
+                </div>
+              </div>
+            </details>
+          </section>
+
+          <section class="sheet" id="abschnitt-b" data-step="2" aria-labelledby="head-b">
+            <header class="sheet-head">
+              <span class="sheet-letter" aria-hidden="true">2</span>
+              <div>
+                <p class="step-count">Schritt 2 von 4</p>
+                <h2 id="head-b" tabindex="-1">Wann bist du in der Schule?</h2>
+                <p>Der Jahresplaner zeigt dir sofort, wie deine Wochen aufgeteilt werden.</p>
+              </div>
+            </header>
+            <div class="fields cols-2">
+              <label class="field">
+                <span class="field-label">Erster Tag</span>
+                <input type="date" id="f-start" data-bind="period.start" />
+              </label>
+              <label class="field">
+                <span class="field-label">Letzter Tag</span>
+                <input type="date" id="f-end" data-bind="period.end" />
+              </label>
+            </div>
+            <div class="fields cols-2">
+              <fieldset class="field">
+                <legend class="field-label">Schultage</legend>
+                <div class="weekday-picker">
+                  <label
+                    ><input type="checkbox" id="sd-1" name="schoolDay" value="1" /><span
+                      >Mo</span
+                    ></label
+                  >
+                  <label
+                    ><input type="checkbox" id="sd-2" name="schoolDay" value="2" /><span
+                      >Di</span
+                    ></label
+                  >
+                  <label
+                    ><input type="checkbox" id="sd-3" name="schoolDay" value="3" /><span
+                      >Mi</span
+                    ></label
+                  >
+                  <label
+                    ><input type="checkbox" id="sd-4" name="schoolDay" value="4" /><span
+                      >Do</span
+                    ></label
+                  >
+                  <label
+                    ><input type="checkbox" id="sd-5" name="schoolDay" value="5" /><span
+                      >Fr</span
+                    ></label
+                  >
+                </div>
+              </fieldset>
+              <fieldset class="field">
+                <legend class="field-label">Schule findet statt in</legend>
+                <div class="switch" role="group">
+                  <button type="button" data-seg="weekType" data-value="both">jeder Woche</button>
+                  <button type="button" data-seg="weekType" data-value="even">geraden KW</button>
+                  <button type="button" data-seg="weekType" data-value="odd">ungeraden KW</button>
+                  <button type="button" data-seg="weekType" data-value="alternating">
+                    jeder 2. Woche
+                  </button>
+                </div>
+              </fieldset>
+            </div>
+            <fieldset class="field" id="firstWeekPicker" hidden>
+              <legend class="field-label">Die erste Woche im Zeitraum ist eine</legend>
+              <div class="switch" role="group">
+                <button type="button" data-seg="firstWeekType" data-value="school">
+                  Schulwoche
+                </button>
+                <button type="button" data-seg="firstWeekType" data-value="work">
+                  Betriebswoche
+                </button>
+              </div>
+            </fieldset>
+
+            <figure class="planner">
+              <figcaption>
+                <span>Jahresplaner</span>
+                <span class="key">
+                  <span><i class="sw sw-schule"></i>Schule + Betrieb</span>
+                  <span><i class="sw sw-betrieb"></i>nur Betrieb</span>
+                  <span><i class="sw sw-ferien"></i>Schulferien, nur Betrieb</span>
+                  <span><i class="sw sw-frei"></i>frei</span>
+                </span>
+              </figcaption>
+              <div class="planner-grid" id="previewTimeline"></div>
+            </figure>
+
+            <details class="more">
+              <summary>Arbeitszeiten <em id="hoursSummary">8 Std. pro Tag</em></summary>
+              <div class="fields cols-4">
+                <label class="field">
+                  <span class="field-label">Std. pro Betriebstag</span>
+                  <input
+                    type="number"
+                    id="f-hb"
+                    min="0"
+                    max="12"
+                    step="0.5"
+                    data-bind="hours.betrieb"
+                  />
+                </label>
+                <label class="field">
+                  <span class="field-label">Std. pro Schultag</span>
+                  <input
+                    type="number"
+                    id="f-hs"
+                    min="0"
+                    max="12"
+                    step="0.5"
+                    data-bind="hours.schule"
+                  />
+                </label>
+              </div>
+              <p class="field-label sub-label">
+                Andere Stunden an einzelnen Wochentagen (z.B. Teilzeit)
+              </p>
+              <div class="weekday-hours">
+                <label class="field"
+                  ><span class="field-label">Mo</span
+                  ><input
+                    type="number"
+                    id="f-h1"
+                    min="0"
+                    max="12"
+                    step="0.5"
+                    data-bind="hours.betriebDays.1"
+                    placeholder="Standard"
+                /></label>
+                <label class="field"
+                  ><span class="field-label">Di</span
+                  ><input
+                    type="number"
+                    id="f-h2"
+                    min="0"
+                    max="12"
+                    step="0.5"
+                    data-bind="hours.betriebDays.2"
+                    placeholder="Standard"
+                /></label>
+                <label class="field"
+                  ><span class="field-label">Mi</span
+                  ><input
+                    type="number"
+                    id="f-h3"
+                    min="0"
+                    max="12"
+                    step="0.5"
+                    data-bind="hours.betriebDays.3"
+                    placeholder="Standard"
+                /></label>
+                <label class="field"
+                  ><span class="field-label">Do</span
+                  ><input
+                    type="number"
+                    id="f-h4"
+                    min="0"
+                    max="12"
+                    step="0.5"
+                    data-bind="hours.betriebDays.4"
+                    placeholder="Standard"
+                /></label>
+                <label class="field"
+                  ><span class="field-label">Fr</span
+                  ><input
+                    type="number"
+                    id="f-h5"
+                    min="0"
+                    max="12"
+                    step="0.5"
+                    data-bind="hours.betriebDays.5"
+                    placeholder="Standard"
+                /></label>
+              </div>
+              <p class="field-hint">Gilt für Betriebstage. Leer lassen heißt: Standard von oben.</p>
+            </details>
+          </section>
+
+          <section class="sheet" id="abschnitt-c" data-step="3" aria-labelledby="head-c">
+            <header class="sheet-head">
+              <span class="sheet-letter" aria-hidden="true">3</span>
+              <div>
+                <p class="step-count">Schritt 3 von 4</p>
+                <h2 id="head-c" tabindex="-1">Wo wohnst du?</h2>
+                <p>
+                  Feiertage und Schulferien deines Bundeslands kommen automatisch. In den Ferien
+                  bist du im Betrieb.
+                </p>
+              </div>
+            </header>
+            <div class="fields cols-2">
+              <label class="field">
+                <span class="field-label">Bundesland</span>
+                <select id="bundesland" data-bind="bundesland"></select>
+              </label>
+            </div>
+            <p class="status-line" id="ferienStatus" aria-live="polite"></p>
+            <fieldset class="field regional" id="regionalHolidays" hidden>
+              <legend class="field-label">Regionale Feiertage</legend>
+              <div class="checks" id="regionalList"></div>
+            </fieldset>
+
+            <details class="more" id="absenceDetails">
+              <summary>
+                Urlaub, Krankheit und Berufsschul-Blöcke <em id="absenceSummary">freiwillig</em>
+              </summary>
+              <ul class="absences" id="absenceList"></ul>
+              <div class="absence-add" id="absenceForm">
+                <label class="field">
+                  <span class="field-label">Eintrag</span>
+                  <select id="a-type" name="absenceType">
+                    <option value="urlaub">Urlaub</option>
+                    <option value="krank">Krankheit</option>
+                    <option value="schulblock">Berufsschul-Block</option>
+                    <option value="schulferien">Schulferien (nur Betrieb)</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span class="field-label">Bezeichnung <em>freiwillig</em></span>
+                  <input
+                    type="text"
+                    id="a-name"
+                    name="absenceName"
+                    placeholder="z.B. Sommerurlaub"
+                  />
+                </label>
+                <label class="field">
+                  <span class="field-label">von</span>
+                  <input type="date" id="a-start" name="absenceStart" />
+                </label>
+                <label class="field">
+                  <span class="field-label">bis</span>
+                  <input type="date" id="a-end" name="absenceEnd" />
+                </label>
+                <button type="button" class="btn btn-quiet" id="addAbsenceBtn">Eintragen</button>
+              </div>
+              <p class="ics-row">
+                <label class="btn btn-text btn-sm"
+                  >Aus Kalender importieren (.ics)<input
+                    type="file"
+                    id="icsInput"
+                    accept=".ics,text/calendar"
+                    hidden
+                /></label>
+                <button type="button" class="btn btn-text btn-sm" id="reloadFerienBtn">
+                  Schulferien neu laden
+                </button>
+              </p>
+            </details>
+          </section>
+
+          <section class="sheet" id="abschnitt-d" data-step="4" aria-labelledby="head-d">
+            <header class="sheet-head">
+              <span class="sheet-letter" aria-hidden="true">4</span>
+              <div>
+                <p class="step-count">Schritt 4 von 4</p>
+                <h2 id="head-d" tabindex="-1">Was machst du im Betrieb?</h2>
+                <p>Ein paar Stichworte reichen. Je genauer, desto glaubwürdiger die Einträge.</p>
+              </div>
+            </header>
+            <div class="fields cols-2">
+              <label class="field">
+                <span class="field-label">Deine Aufgaben</span>
+                <textarea
+                  id="f-taetigkeiten"
+                  rows="3"
+                  data-bind="activities.taetigkeiten"
+                  placeholder="Tickets im Service-Desk, Frontend mit React, Code-Reviews, Tests schreiben"
+                ></textarea>
+              </label>
+              <label class="field">
+                <span class="field-label">Tools und Technik</span>
+                <textarea
+                  id="f-tech"
+                  rows="3"
+                  data-bind="activities.technologies"
+                  placeholder="TypeScript, React, PostgreSQL, Git, Docker, Jira"
+                ></textarea>
+              </label>
+            </div>
+
+            <details class="more">
+              <summary>
+                Schreibstil, Länge und mehr <em id="styleSummary">Ich-Form, normal</em>
+              </summary>
+              <div class="fields cols-3">
+                <label class="field">
+                  <span class="field-label">Schreibweise</span>
+                  <select id="f-stil" data-bind="activities.stil">
+                    <option value="ich">Ganze Sätze in Ich-Form</option>
+                    <option value="neutral">Ganze Sätze, sachlich</option>
+                    <option value="stichpunkte">Stichpunkte</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span class="field-label">Umfang pro Tag</span>
+                  <select id="f-laenge" data-bind="activities.laenge">
+                    <option value="kurz">Kurz (1 bis 2 Sätze)</option>
+                    <option value="mittel">Normal (3 bis 4 Sätze)</option>
+                    <option value="lang">Ausführlich (5 bis 6 Sätze)</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span class="field-label">Zeichen pro Tag</span>
+                  <input
+                    type="number"
+                    id="f-maxchars"
+                    min="50"
+                    step="10"
+                    data-bind="activities.maxChars"
+                    placeholder="kein Limit"
+                  />
+                  <span class="field-hint">Falls dein IHK-Portal die Länge begrenzt</span>
+                </label>
+              </div>
+              <div class="fields cols-2">
+                <label class="field">
+                  <span class="field-label">Fächer und Lernfelder</span>
+                  <textarea
+                    id="f-faecher"
+                    rows="2"
+                    data-bind="activities.schulfaecher"
+                    placeholder="Leer lassen, dann nimmt die KI die Lernfelder deines Ausbildungsjahrs"
+                  ></textarea>
+                </label>
+                <label class="field">
+                  <span class="field-label">Hinweise für die KI</span>
+                  <textarea
+                    id="f-hinweise"
+                    rows="2"
+                    data-bind="activities.hinweise"
+                    placeholder="z.B. Ab November arbeite ich an der Umstellung des Intranets"
+                  ></textarea>
+                </label>
+              </div>
+              <label class="check">
+                <input
+                  type="checkbox"
+                  id="f-unterweisungen"
+                  data-bind="activities.unterweisungenKi"
+                />
+                <span
+                  >Unterweisungen von der KI vorschlagen lassen
+                  <em>(drittes Feld im IHK-Formular)</em></span
+                >
+              </label>
+            </details>
+          </section>
+
+          <div class="step-nav" id="stepNav">
+            <button type="button" class="btn btn-text" id="stepBack">Zurück</button>
+            <ol class="step-dots" aria-hidden="true">
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ol>
+            <button type="button" class="btn btn-ink" id="stepNext">Weiter</button>
+          </div>
+        </div>
+
+        <section class="runbar" aria-label="Nachweise schreiben lassen">
+          <div class="runbar-text">
+            <strong>Nachweise schreiben lassen</strong>
+            <span id="generateInfo">…</span>
+          </div>
+          <div class="runbar-actions">
+            <button
+              type="button"
+              class="btn btn-text"
+              id="weeksOnlyBtn"
+              title="Wochen anlegen, um vorher Stichworte einzutragen"
+            >
+              Erst Stichworte eintragen
+            </button>
+            <button type="button" class="btn btn-ink btn-lg" id="genBtn">
+              <span class="btn-spinner" aria-hidden="true"></span>
+              <span>Nachweise schreiben</span>
+            </button>
+          </div>
+          <div class="resume" id="resumeBanner" hidden>
+            <span id="resumeText"></span>
+            <button type="button" class="btn btn-quiet btn-sm" id="resumeBtn">
+              Weiter schreiben
+            </button>
+          </div>
+          <div class="runbar-progress" id="progressPanel" hidden>
+            <div class="runbar-row">
+              <span id="progressText">…</span>
+              <button type="button" class="btn btn-text" id="cancelBtn">Abbrechen</button>
+            </div>
+            <div
+              class="meter"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-valuenow="0"
+            >
+              <div class="meter-fill" id="progressBar"></div>
+            </div>
+            <span class="status-line" id="progressDetail" aria-live="polite"></span>
+          </div>
+        </section>
+
+        <section id="results" hidden aria-labelledby="resultsTitle">
+          <header class="results-head">
+            <div class="results-title">
+              <span class="sheet-letter" aria-hidden="true">5</span>
+              <h2 id="resultsTitle">Nachweise</h2>
+              <span class="count" id="totalWeeksLabel">0 Wochen</span>
+            </div>
+            <div class="export">
+              <button type="button" class="btn btn-ink" id="transferBtn">
+                Ins IHK-Portal übertragen
+              </button>
+              <details class="menu">
+                <summary class="btn btn-quiet">Exportieren</summary>
+                <div class="menu-panel menu-right" role="menu">
+                  <button type="button" class="menu-item" id="pdfBtn" role="menuitem">
+                    PDF-Datei
+                  </button>
+                  <button type="button" class="menu-item" id="docxBtn" role="menuitem">
+                    Word-Datei (.docx)
+                  </button>
+                  <button type="button" class="menu-item" id="printBtn" role="menuitem">
+                    Drucken
+                  </button>
+                  <hr />
+                  <button type="button" class="menu-item" id="trainerBtn" role="menuitem">
+                    Prüfansicht für Ausbilder/in
+                  </button>
+                  <label class="menu-item" role="menuitem"
+                    >Kommentare vom Ausbilder laden<input
+                      type="file"
+                      id="commentsInput"
+                      accept="application/json,.json"
+                      hidden
+                  /></label>
+                  <hr />
+                  <button type="button" class="menu-item" id="exportTxtBtn" role="menuitem">
+                    Textdatei (.txt)
+                  </button>
+                  <button type="button" class="menu-item" id="exportCsvBtn" role="menuitem">
+                    Tabelle für Excel (.csv)
+                  </button>
+                  <button type="button" class="menu-item" id="backupBtn" role="menuitem">
+                    Backup speichern
+                  </button>
+                </div>
+              </details>
+              <details class="menu">
+                <summary class="btn btn-quiet">Für alle Wochen</summary>
+                <div class="menu-panel menu-right" role="menu">
+                  <button type="button" class="menu-item" id="redoTemplatesBtn" role="menuitem">
+                    Textbaustein-Wochen neu schreiben
+                  </button>
+                  <button type="button" class="menu-item" id="shortenBtn" role="menuitem">
+                    Zu lange Einträge kürzen
+                  </button>
+                  <button type="button" class="menu-item" id="unstampBtn" role="menuitem">
+                    Alle Stempel entfernen
+                  </button>
+                </div>
+              </details>
+            </div>
+          </header>
+
+          <p class="results-hint">
+            Zum Übertragen ins IHK-Berichtsheft führt dich „Ins IHK-Portal übertragen“ Tag für Tag
+            oder Woche für Woche durch. Einzelne Tage kopierst du mit „Kopieren“. Kopiert wird
+            reiner Text ohne Formatierung.
+          </p>
+
+          <dl class="tally" id="statsRow"></dl>
+          <div
+            class="planner-grid planner-lg"
+            id="resultsTimeline"
+            aria-label="Wochen im Überblick, anklicken zum Springen"
+          ></div>
+
+          <details class="disclosure rahmenplan" id="rahmenplanPanel" hidden>
+            <summary id="rahmenplanSummary">Ausbildungsrahmenplan</summary>
+            <p class="field-hint">
+              Grobe Schätzung anhand von Stichwörtern in deinen Einträgen. Themen ohne Treffer
+              solltest du mit deinem Ausbilder ansprechen.
+            </p>
+            <ol class="coverage" id="rahmenplanList"></ol>
+          </details>
+
+          <div class="list-tools">
+            <input
+              type="search"
+              id="searchInput"
+              placeholder="In den Einträgen suchen, z.B. Docker oder KW 45"
+              aria-label="In den Einträgen suchen"
+            />
+            <button type="button" class="btn btn-text" id="expandAllBtn">Alle öffnen</button>
+            <button type="button" class="btn btn-text" id="collapseAllBtn">Alle schließen</button>
+          </div>
+
+          <div class="weeks" id="weeksGrid"></div>
+        </section>
+
+        <footer class="colophon">
+          <p>
+            Entwickelt von
+            <a href="https://s4bt.de" target="_blank" rel="noopener"><strong>s4bt</strong></a
+            >. Der Quellcode liegt
+            <a href="https://github.com/SneakyTreee/Azubix" target="_blank" rel="noopener"
+              >auf GitHub</a
+            >.
+          </p>
+          <p>
+            Die Texte schreibt
+            <a href="https://pollinations.ai" target="_blank" rel="noopener">Pollinations.ai</a>,
+            die Schulferien kommen von der
+            <a href="https://openholidaysapi.org" target="_blank" rel="noopener">OpenHolidays API</a
+            >. Lies jeden Eintrag vor der Abgabe noch einmal durch.
+          </p>
+          <p class="colophon-actions">
+            <label class="btn btn-text"
+              >Backup laden<input
+                type="file"
+                id="importInput"
+                accept="application/json,.json"
+                hidden
+            /></label>
+            <button type="button" class="btn btn-text" id="demoFooterBtn">Beispiel ansehen</button>
+            <button type="button" class="btn btn-text danger" id="resetBtn">Alles löschen</button>
+          </p>
+        </footer>
+      </main>
+    </div>
+
+    <dialog id="settingsDialog" aria-labelledby="settingsTitle">
+      <form method="dialog">
+        <h2 id="settingsTitle">Wer schreibt die Texte?</h2>
+        <div class="choices">
+          <label class="choice">
+            <input type="radio" name="provider" value="pollinations" />
+            <span
+              ><strong>Kostenlose KI</strong
+              ><small
+                >Pollinations.ai, ohne Konto und ohne Schlüssel. Der Dienst beantwortet etwa eine
+                Anfrage alle 30 Sekunden. Ein ganzes Ausbildungsjahr dauert deshalb rund 15
+                Minuten.</small
+              ></span
+            >
+          </label>
+          <label class="choice">
+            <input type="radio" name="provider" value="custom" />
+            <span
+              ><strong>Eigener API-Schlüssel</strong
+              ><small
+                >Für jeden Dienst mit OpenAI-kompatibler Schnittstelle, z.B. Groq (kostenloser
+                Tarif), OpenRouter oder Ollama auf deinem Rechner. Deutlich schneller. Der Schlüssel
+                bleibt in deinem Browser.</small
+              ></span
+            >
+          </label>
+          <label class="choice">
+            <input type="radio" name="provider" value="offline" />
+            <span
+              ><strong>Ohne KI</strong
+              ><small
+                >Einfache Textbausteine aus deinen Tätigkeiten. Sofort fertig, aber eintönig.</small
+              ></span
+            >
+          </label>
+        </div>
+
+        <div id="customFields" class="fields" hidden>
+          <label class="field">
+            <span class="field-label">Anbieter</span>
+            <select id="presetSelect">
+              <option value="">Vorlage wählen …</option>
+            </select>
+          </label>
+          <label class="field">
+            <span class="field-label">Adresse (Base-URL)</span>
+            <input
+              type="url"
+              id="s-baseurl"
+              name="baseUrl"
+              placeholder="https://api.groq.com/openai/v1"
+            />
+          </label>
+          <label class="field">
+            <span class="field-label">Modell</span>
+            <input type="text" id="s-model" name="model" />
+          </label>
+          <label class="field">
+            <span class="field-label">API-Schlüssel <em>bei Ollama leer lassen</em></span>
+            <input type="password" id="s-key" name="apiKey" autocomplete="off" />
+          </label>
+          <label class="check">
+            <input type="checkbox" id="s-session" name="sessionOnlyKey" />
+            <span
+              >Schlüssel nur für diese Sitzung merken
+              <em>(weg, wenn der Tab geschlossen wird)</em></span
+            >
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="field-label">Wochen pro Anfrage</span>
+          <input type="number" id="s-batch" name="batchSize" min="1" max="8" />
+          <span class="field-hint"
+            >Mehr Wochen pro Anfrage gehen schneller, aber lange Antworten brechen öfter ab. 3 ist
+            ein guter Wert.</span
+          >
+        </label>
+
+        <label class="check">
+          <input type="checkbox" id="s-fallback" name="fallbackToCustom" />
+          <span
+            >Wenn die kostenlose KI ausfällt, meinen eigenen Schlüssel nutzen
+            <em>(falls eingerichtet)</em></span
+          >
+        </label>
+
+        <p class="status-line" id="testResult" aria-live="polite"></p>
+
+        <div class="dialog-actions">
+          <button type="button" class="btn btn-text" id="testBtn">Verbindung prüfen</button>
+          <button type="submit" class="btn btn-quiet" value="cancel">Abbrechen</button>
+          <button type="submit" class="btn btn-ink" value="save">Übernehmen</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="transferDialog" class="transfer" aria-labelledby="transferTitle">
+      <header class="transfer-head">
+        <h2 id="transferTitle">Ins IHK-Portal übertragen</h2>
+        <div class="switch" role="group" aria-label="Wie trägst du im IHK-Portal ein?">
+          <button type="button" data-transfer-mode="day">Tag für Tag</button>
+          <button type="button" data-transfer-mode="week">Woche für Woche</button>
+        </div>
+      </header>
+      <p class="transfer-where" id="transferWhere"></p>
+      <div class="transfer-box">
+        <div class="transfer-meta">
+          <span id="transferField"></span><span id="transferCount"></span>
+        </div>
+        <pre class="transfer-text" id="transferText" tabindex="0"></pre>
+      </div>
+      <div class="meter" aria-hidden="true"><div class="meter-fill" id="transferBar"></div></div>
+      <div class="dialog-actions">
+        <button type="button" class="btn btn-text" id="transferClose">Schließen</button>
+        <button type="button" class="btn btn-quiet" id="transferPrev">Zurück</button>
+        <button type="button" class="btn btn-quiet" id="transferSkip">Überspringen</button>
+        <button type="button" class="btn btn-ink" id="transferNext">Kopieren und weiter</button>
+      </div>
+      <p class="field-hint">
+        Enter kopiert und springt weiter. Den Text fügst du im IHK-Portal mit Strg+V ein.
+      </p>
+    </dialog>
+
+    <dialog id="shortcutsDialog" aria-labelledby="shortcutsTitle">
+      <h2 id="shortcutsTitle">Tastenkürzel</h2>
+      <dl class="shortcuts">
+        <div>
+          <dt><kbd>?</kbd></dt>
+          <dd>Diese Übersicht</dd>
+        </div>
+        <div>
+          <dt><kbd>Alt</kbd> + <kbd>↓</kbd> / <kbd>↑</kbd></dt>
+          <dd>Nächste oder vorige Woche öffnen</dd>
+        </div>
+        <div>
+          <dt><kbd>Strg</kbd> + <kbd>Enter</kbd></dt>
+          <dd>Im Tagestext: „Mit KI ändern“ öffnen</dd>
+        </div>
+        <div>
+          <dt><kbd>Strg</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd></dt>
+          <dd>Im Tagestext: den Tag kopieren</dd>
+        </div>
+        <div>
+          <dt><kbd>Strg</kbd> + <kbd>Z</kbd></dt>
+          <dd>Im Tagestext: Tippen rückgängig (Browser)</dd>
+        </div>
+        <div>
+          <dt><kbd>Enter</kbd></dt>
+          <dd>Im Übertragen-Assistenten: kopieren und weiter</dd>
+        </div>
+      </dl>
+      <div class="dialog-actions">
+        <button type="button" class="btn btn-ink" id="shortcutsClose">Schließen</button>
+      </div>
+    </dialog>
+
+    <dialog id="choiceDialog">
+      <h2></h2>
+      <p></p>
+      <div class="dialog-actions"></div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div id="printArea" aria-hidden="true"></div>
+
+    <script defer src="assets/js/core/storage.js"></script>
+    <script defer src="assets/js/core/state.js"></script>
+    <script defer src="assets/js/core/hefte.js"></script>
+    <script defer src="assets/js/core/dates.js"></script>
+    <script defer src="assets/js/data/berufe.js"></script>
+    <script defer src="assets/js/data/holidays.js"></script>
+    <script defer src="assets/js/data/rahmenplan.js"></script>
+    <script defer src="assets/js/app/schedule.js"></script>
+    <script defer src="assets/js/app/quality.js"></script>
+    <script defer src="assets/js/app/ics.js"></script>
+    <script defer src="assets/js/ai/client.js"></script>
+    <script defer src="assets/js/ai/prompts.js"></script>
+    <script defer src="assets/js/ai/templates.js"></script>
+    <script defer src="assets/js/ai/writer.js"></script>
+    <script defer src="assets/js/ui/feedback.js"></script>
+    <script defer src="assets/js/ui/form.js"></script>
+    <script defer src="assets/js/ui/settings.js"></script>
+    <script defer src="assets/js/ui/results.js"></script>
+    <script defer src="assets/js/ui/day-editor.js"></script>
+    <script defer src="assets/js/ui/shell.js"></script>
+    <script defer src="assets/js/ui/transfer.js"></script>
+    <script defer src="assets/js/ui/setup.js"></script>
+    <script defer src="assets/js/app/generation.js"></script>
+    <script defer src="assets/js/app/export.js"></script>
+    <script defer src="assets/js/app/export-docs.js"></script>
+    <script defer src="assets/js/main.js"></script>
+    <script defer src="assets/js/pwa.js"></script>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+# Was nicht auf GitHub gehört. Lokal bleiben die Dateien erhalten und
+# funktionieren wie gewohnt (npm test, npm run lint, Browser-Tests).
+
+# ---------- Entwicklung: Tests und Prüfwerkzeuge ----------
+tests/
+test-results/
+playwright-report/
+playwright.config.js
+.github/
+eslint.config.js
+.prettierrc.json
+.prettierignore
+jsconfig.json
+assets/js/core/types.js
+
+# ---------- Pakete ----------
+package.json
+package-lock.json
+node_modules/
+
+# ---------- Interne Notizen und optionale Server-Vorlage ----------
+idea.md
+server/
+docs/eigener-server.md
+
+# ---------- Editor und Betriebssystem ----------
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------- Logs, Umgebungsvariablen, lokale KI-Einstellungen ----------
+*.log
+npm-debug.log*
+.env
+.env.*
+.claude/settings.local.json

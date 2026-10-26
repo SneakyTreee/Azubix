@@ -1,0 +1,658 @@
+/* Nachweise: Übersicht, Wochen, Tagestabelle, Werkzeuge pro Tag, Stempel */
+
+/* ---------- Ergebnisse ---------- */
+#results {
+  display: grid;
+  gap: 18px;
+  padding-top: 12px;
+}
+
+.results-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.results-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.results-title h2 {
+  font-size: 1.75rem;
+}
+
+.count {
+  color: var(--muted);
+}
+
+.export {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tally {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+}
+
+.tally div {
+  display: grid;
+}
+
+.tally dt {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.tally dd {
+  font: 600 1.5rem/1.2 var(--display);
+  letter-spacing: -0.01em;
+}
+
+.tally .of {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.list-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.list-tools input {
+  flex: 1;
+}
+
+.weeks {
+  display: grid;
+  gap: 10px;
+}
+
+/* Ein Wochenblatt */
+.week-card {
+  position: relative;
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+.week-card.open {
+  border-color: var(--rule-strong);
+  box-shadow: var(--lift);
+}
+
+.week-head {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 56px 96px 156px 140px minmax(0, 1fr) auto 18px;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.week-head:hover {
+  background: color-mix(in srgb, var(--paper) 60%, transparent);
+}
+
+.week-nr {
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.week-kw {
+  font: 600 1.05rem var(--display);
+}
+
+.week-kw small {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.week-dates {
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.week-type {
+  display: inline-flex;
+  white-space: nowrap;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.95rem;
+}
+
+.week-type::before {
+  content: "";
+  width: 8px;
+  height: 14px;
+  border-radius: 1px;
+  background: var(--frei);
+}
+
+.week-type.cat-schule::before {
+  background: var(--schule);
+}
+.week-type.cat-betrieb::before {
+  background: var(--betrieb);
+}
+.week-type.cat-ferien::before {
+  background: var(--ferien);
+}
+
+.week-preview {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.week-card.open .week-preview {
+  visibility: hidden;
+}
+
+.week-state {
+  font-size: 0.88rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.week-state.st-loading {
+  color: var(--ink);
+  animation: blink 1.2s ease-in-out infinite;
+}
+
+.week-state.st-fallback,
+.week-state.st-partial {
+  color: var(--ferien);
+}
+
+.week-state.st-reviewed {
+  color: var(--stamp);
+  font-weight: 600;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.chevron {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 2;
+  transition: transform 0.2s;
+}
+
+.week-card.open .chevron {
+  transform: rotate(180deg);
+}
+
+.week-body {
+  display: none;
+  position: relative;
+  padding: 0 18px 18px;
+}
+
+.week-card.open .week-body {
+  display: block;
+}
+
+/* Tabelle wie im gedruckten Nachweis */
+.day-table {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.day-table-head,
+.day-row {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr) 80px;
+}
+
+.day-table-head {
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  font: 500 0.85rem var(--body);
+  color: var(--muted);
+}
+
+.day-table-head span,
+.day-row > * {
+  padding: 8px 12px;
+}
+
+.day-table-head span + span,
+.day-row > * + * {
+  border-left: 1px solid var(--rule);
+}
+
+.day-row + .day-row {
+  border-top: 1px solid var(--rule);
+}
+
+.day-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.day-title {
+  display: grid;
+  font: 600 0.98rem/1.3 var(--display);
+}
+
+.day-title span {
+  font: 400 0.85rem var(--body);
+  color: var(--muted);
+}
+
+.kind-select {
+  width: auto;
+  max-width: 100%;
+  padding: 3px 26px 3px 8px;
+  border-bottom-width: 1px;
+  font: 500 0.85rem var(--body);
+  border: 1px solid var(--rule);
+  background-color: transparent;
+  background-position:
+    calc(100% - 13px) 55%,
+    calc(100% - 8px) 55%;
+}
+
+.kind-schule .kind-select {
+  color: var(--schule);
+}
+.kind-betrieb .kind-select {
+  color: var(--betrieb);
+}
+.kind-feiertag .kind-select,
+.kind-urlaub .kind-select,
+.kind-krank .kind-select {
+  color: var(--muted);
+}
+
+.day-note {
+  font-size: 0.85rem;
+  color: var(--ferien);
+}
+
+/* Tageseintrag: wirkt wie Text, wird beim Bearbeiten zum Feld */
+.day-content textarea {
+  display: block;
+  min-height: 52px;
+  padding: 6px 8px;
+  overflow: hidden;
+  resize: none;
+  border-color: transparent;
+  background: transparent;
+  line-height: 1.55;
+}
+
+.day-content textarea:hover {
+  border-color: var(--rule);
+}
+
+.kind-feiertag .day-content textarea,
+.kind-urlaub .day-content textarea,
+.kind-krank .day-content textarea {
+  font-style: italic;
+  color: var(--muted);
+}
+
+.day-hours {
+  display: flex;
+  align-items: flex-start;
+}
+
+.day-hours input {
+  padding: 6px 4px;
+  text-align: center;
+}
+
+.skeleton {
+  height: 12px;
+  margin: 8px 0 14px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--rule) 25%, var(--field) 50%, var(--rule) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.3s infinite;
+}
+
+.skeleton.short {
+  width: 55%;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.week-foot {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 10px 24px;
+  margin-top: 14px;
+}
+
+.summary-field {
+  display: grid;
+  gap: 6px;
+}
+
+.week-sum {
+  align-self: end;
+  text-align: right;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.week-sum b {
+  display: block;
+  font: 600 1.4rem/1.2 var(--display);
+  color: var(--ink);
+}
+
+.week-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px 8px;
+}
+
+.btn-stamp {
+  border-color: var(--stamp);
+  color: var(--stamp);
+}
+
+.btn-stamp:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--stamp) 10%, transparent);
+}
+
+/* Stempel "Geprüft": Großbuchstaben, weil echte Stempel so aussehen */
+.stamp {
+  align-self: end;
+  margin: 0 8px 4px;
+  display: grid;
+  justify-items: center;
+  padding: 6px 14px 5px;
+  border: 2px solid var(--stamp);
+  border-radius: var(--radius-sm);
+  color: var(--stamp);
+  font: 700 1.15rem/1 var(--display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  rotate: -5deg;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.stamp small {
+  margin-top: 4px;
+  font: 600 0.72rem var(--body);
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Werkzeuge pro Tag ---------- */
+.day-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px 4px;
+  margin: 2px 0 0 2px;
+}
+
+.btn-xs {
+  min-height: 28px;
+  padding: 0 6px;
+  font-size: 0.85rem;
+}
+
+.day-tools .btn-xs:first-child {
+  margin-left: -6px;
+}
+
+.char-count {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.char-count.over {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.day-content textarea:disabled {
+  opacity: 0.5;
+}
+
+.ai-panel {
+  display: grid;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 12px;
+  background: var(--paper);
+  border-radius: var(--radius-sm);
+}
+
+.ai-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip-btn {
+  padding: 5px 12px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: var(--sheet);
+  color: var(--ink);
+  font: 500 0.88rem var(--body);
+  cursor: pointer;
+}
+
+.chip-btn:hover:not(:disabled) {
+  border-color: var(--ink);
+}
+
+.chip-btn:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+.ai-custom {
+  display: flex;
+  gap: 8px;
+}
+
+.ai-custom input {
+  flex: 1;
+  background: var(--sheet);
+}
+
+.ai-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ai-panel.busy .ai-status {
+  color: var(--ink);
+  animation: blink 1.2s ease-in-out infinite;
+}
+
+.results-hint {
+  max-width: 75ch;
+  color: var(--muted);
+}
+
+.tally .tally-warn dd {
+  color: var(--ferien);
+}
+
+/* Stichworte über dem Tagestext */
+.day-notes {
+  margin-bottom: 6px;
+  padding: 6px 8px;
+  font-size: 0.92rem;
+  background: var(--paper);
+  border-color: transparent;
+}
+
+.day-notes:hover {
+  border-color: var(--rule);
+}
+
+/* Hinweise unter einem Tag */
+.day-hints {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0 0 2px;
+}
+
+.hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--ferien) 12%, transparent);
+  color: var(--ink-soft);
+  font: 500 0.8rem var(--body);
+}
+
+.hint::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ferien);
+}
+
+button.hint {
+  cursor: pointer;
+}
+
+button.hint:hover {
+  text-decoration: underline;
+}
+
+.chip-btn.chip-primary {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--on-ink);
+}
+
+/* Unterweisungen und Ausbilder-Kommentar */
+.unterweisung {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 90px;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.unterweisung textarea {
+  min-height: 42px;
+  overflow: hidden;
+  resize: none;
+}
+
+.trainer-comment {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-left: 3px solid var(--schule);
+  background: color-mix(in srgb, var(--schule) 8%, transparent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.trainer-comment.ok {
+  border-left-color: var(--betrieb);
+  background: color-mix(in srgb, var(--betrieb) 8%, transparent);
+}
+
+.trainer-comment p {
+  margin-top: 4px;
+}
+
+/* Ausbildungsrahmenplan */
+.rahmenplan {
+  padding: 14px 18px;
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+.rahmenplan > summary {
+  font-weight: 600;
+}
+
+.coverage {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.coverage li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(80px, 200px) 150px;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.92rem;
+}
+
+.coverage-bar {
+  height: 8px;
+  background: var(--paper);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.coverage-bar i {
+  display: block;
+  height: 100%;
+  background: var(--ink-soft);
+  border-radius: 0 4px 4px 0;
+}
+
+.coverage-count {
+  color: var(--muted);
+}
+
+.coverage .uncovered .coverage-title {
+  font-weight: 600;
+}
+
+.coverage .uncovered .coverage-count {
+  color: var(--ferien);
+  font-weight: 600;
+}

@@ -1,0 +1,10 @@
+# Einheitliche Zeilenenden
+* text=auto eol=lf
+*.png binary
+
+# Nicht im "Download ZIP" von GitHub: Die Bilder braucht nur die README-Seite,
+# Git-Einstellungen braucht niemand, der Azubix einfach benutzen will.
+docs/ export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+CHANGELOG.md export-ignore

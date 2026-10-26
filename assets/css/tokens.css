@@ -1,0 +1,84 @@
+/* Layout: links eine ruhige Register-Navigation A–E, rechts klare Abschnitte.
+   Modern und reduziert: eine Schriftfamilie, Tinte als einzige Akzentfarbe,
+   Farbe nur für die Wochentypen. Geprüfte Wochen bekommen einen Stempel. */
+:root {
+  /* Farbe */
+  --paper: #f4f5f7; /* Schreibtisch hinter den Blättern */
+  --sheet: #ffffff; /* Formularblatt */
+  --field: #ffffff; /* Eingabefeld */
+  --ink: #18202c; /* Tinte: Text und Hauptknöpfe */
+  --ink-soft: #2c3645;
+  --muted: #5f6775;
+  --rule: #e3e6eb;
+  --rule-strong: #cfd4dc;
+  --marker: #ffe066; /* nur im Logo */
+  --marker-soft: rgba(24, 32, 44, 0.08);
+  --stamp: #b2302b; /* Stempelfarbe */
+  --schule: #2557c4;
+  --betrieb: #138a72;
+  --ferien: #c4701a;
+  --frei: #b3b8ae;
+  --danger: #b42318;
+  --on-ink: #ffffff;
+  --lift: 0 1px 2px rgba(24, 32, 44, 0.05), 0 4px 16px -8px rgba(24, 32, 44, 0.12);
+  --ring: 0 0 0 3px rgba(24, 32, 44, 0.14);
+  --radius: 12px;
+  --radius-sm: 8px;
+
+  /* Schrift */
+  --display: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+  --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+
+  /* Maße */
+  --lh-ruled: 26px;
+  --masthead-h: 60px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0f1216;
+    --sheet: #181d24;
+    --field: #181d24;
+    --ink: #e8eaed;
+    --ink-soft: #c9ced6;
+    --muted: #9aa2ae;
+    --rule: #2b323c;
+    --rule-strong: #47515e;
+    --marker: #e9cf55;
+    --marker-soft: rgba(232, 234, 237, 0.1);
+    --stamp: #ec6a62;
+    --schule: #5a85e0;
+    --betrieb: #1f9e7e;
+    --ferien: #c47a2c;
+    --frei: #4a525c;
+    --danger: #f2766b;
+    --on-ink: #101419;
+    --lift: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --ring: 0 0 0 3px rgba(232, 234, 237, 0.18);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #0f1216;
+  --sheet: #181d24;
+  --field: #181d24;
+  --ink: #e8eaed;
+  --ink-soft: #c9ced6;
+  --muted: #9aa2ae;
+  --rule: #2b323c;
+  --rule-strong: #47515e;
+  --marker: #e9cf55;
+  --marker-soft: rgba(232, 234, 237, 0.1);
+  --stamp: #ec6a62;
+  --schule: #5a85e0;
+  --betrieb: #1f9e7e;
+  --ferien: #c47a2c;
+  --frei: #4a525c;
+  --danger: #f2766b;
+  --on-ink: #101419;
+  --lift: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --ring: 0 0 0 3px rgba(232, 234, 237, 0.18);
+  color-scheme: dark;
+}

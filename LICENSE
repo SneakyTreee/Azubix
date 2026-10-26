@@ -1,0 +1,82 @@
+Azubix License (MIT-based, non-commercial, attribution required)
+
+Copyright (c) 2026 s4bt (https://s4bt.de)
+Original repository: https://github.com/SneakyTreee/Azubix
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to use,
+copy, modify, merge, publish and distribute the Software, and to permit persons
+to whom the Software is furnished to do so, for NON-COMMERCIAL purposes only,
+subject to the following conditions:
+
+1. Notice. The above copyright notice, this permission notice and the
+   conditions below shall be included in all copies or substantial portions
+   of the Software.
+
+2. Attribution. Any use of the Software or of substantial portions of it,
+   whether unmodified or modified, including use in a website, hosted service,
+   application or other derived work, must give clear credit to the original
+   author by:
+
+     a) naming the author: s4bt
+     b) linking to the original repository:
+        https://github.com/SneakyTreee/Azubix
+     c) linking to the author's website: https://s4bt.de
+
+   In websites, hosted services and applications, this credit must be visible
+   to end users, for example in the footer or on an "About" page. In other
+   distributions it must appear in the documentation (for example the README).
+   The credit must not be removed, hidden or made illegible.
+
+3. Non-commercial use only. You may not use the Software, or any work derived
+   from it, to earn money. In particular, without prior written permission of
+   the author you may not:
+
+     a) sell or license the Software or derived works, alone or as part of
+        another product;
+     b) offer the Software or derived works as a paid service, subscription,
+        or behind any paywall;
+     c) show advertising, collect affiliate commissions or otherwise generate
+        revenue with a website, app or service based on the Software;
+     d) use the Software as part of a paid offering, such as paid courses,
+        paid consulting or paid report-writing services.
+
+   Using the Software to write your own training reports (Berichtsheft) is
+   not commercial use, even if you are an apprentice employed by a company.
+   Companies may let their own apprentices use it free of charge, as long as
+   they do not charge anyone for it.
+
+   For commercial use, contact the author via https://s4bt.de.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+-------------------------------------------------------------------------------
+
+Kurzfassung auf Deutsch (unverbindlich, maßgeblich ist der englische Text oben)
+
+Erlaubt:
+  - den Code kostenlos nutzen, verändern und weitergeben
+  - mit Azubix dein eigenes Berichtsheft schreiben, auch als Azubi in einer Firma
+  - Firmen dürfen Azubix ihren eigenen Azubis kostenlos bereitstellen
+
+Nicht erlaubt (ohne schriftliche Erlaubnis von s4bt):
+  - Azubix oder darauf aufbauende Projekte verkaufen oder lizenzieren
+  - es als bezahlten Dienst, Abo oder hinter einer Bezahlschranke anbieten
+  - damit Werbe-, Affiliate- oder sonstige Einnahmen erzielen
+  - es in bezahlten Kursen, Beratungen oder Schreibdiensten einsetzen
+
+Pflicht bei jeder Nutzung: sichtbar nennen
+  - den Namen s4bt,
+  - einen Link zum Repo: https://github.com/SneakyTreee/Azubix
+  - einen Link zu https://s4bt.de
+
+Bei Websites und Apps muss diese Nennung für die Nutzer sichtbar sein (z.B. in
+der Fußzeile oder unter „Über“). Diese Lizenzdatei muss mitgegeben werden.
+Der Code kommt ohne Gewähr. Für eine kommerzielle Nutzung: Kontakt über
+https://s4bt.de.

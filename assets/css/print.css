@@ -1,0 +1,115 @@
+/* ---------- Druck: ein Ausbildungsnachweis pro A4-Seite ---------- */
+@media print {
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+    font: 10.5pt/1.4 var(--body);
+  }
+
+  body::before {
+    display: none;
+  }
+
+  body > *:not(#printArea) {
+    display: none !important;
+  }
+
+  #printArea {
+    display: block;
+  }
+
+  .print-page {
+    break-after: page;
+  }
+
+  .print-page:last-child {
+    break-after: auto;
+  }
+
+  .print-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #000;
+  }
+
+  .print-head h2 {
+    font: 700 16pt var(--display);
+  }
+
+  .print-logo {
+    max-width: 40mm;
+    max-height: 16mm;
+    object-fit: contain;
+  }
+
+  .print-page table {
+    width: 100%;
+    margin-bottom: 10px;
+    border-collapse: collapse;
+  }
+
+  .print-page th,
+  .print-page td {
+    padding: 5px 7px;
+    border: 1px solid #555;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .print-meta th,
+  .print-days thead th {
+    background: #eee;
+    font: 600 10pt var(--display);
+  }
+
+  .print-meta th {
+    width: 16%;
+  }
+
+  .print-days td:first-child {
+    width: 22%;
+  }
+
+  .print-days td:last-child,
+  .print-days th:last-child {
+    width: 8%;
+    text-align: center;
+  }
+
+  .print-days tr {
+    break-inside: avoid;
+  }
+
+  .print-days tfoot td {
+    font-weight: 600;
+  }
+
+  .print-days tfoot td:first-child {
+    text-align: right;
+  }
+
+  .print-summary {
+    margin-bottom: 10px;
+  }
+
+  .print-sign {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .print-sign div {
+    padding-top: 4px;
+    border-top: 1px solid #000;
+    font-size: 8.5pt;
+  }
+}
